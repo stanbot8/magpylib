@@ -467,6 +467,12 @@ def check_format_input_observers(inp, pixel_agg=None):
 
     try:  # try if input is just a pos_vec
         inp = np.array(inp, dtype=float)
+        if not np.all(np.isfinite(inp)):
+            msg = (
+                "Input observers must contain only finite values; "
+                "received array containing NaN or infinity."
+            )
+            raise MagpylibBadUserInput(msg)
         pix_shapes = [(1, 3) if inp.shape == (3,) else inp.shape]
         return [_src.obj_classes.class_Sensor.Sensor(pixel=inp)], pix_shapes
     except (TypeError, ValueError) as err:  # if not, it must be [pos_vec, sens, coll]
