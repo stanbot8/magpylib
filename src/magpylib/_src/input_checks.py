@@ -15,7 +15,11 @@ from scipy.spatial.transform import Rotation
 from magpylib import _src
 from magpylib._src.defaults.defaults_classes import default_settings
 from magpylib._src.defaults.defaults_utility import SUPPORTED_PLOTTING_BACKENDS
-from magpylib._src.exceptions import MagpylibBadUserInput, MagpylibMissingInput
+from magpylib._src.exceptions import (
+    MagpylibBadInputShape,
+    MagpylibBadUserInput,
+    MagpylibMissingInput,
+)
 from magpylib._src.utility import format_obj_input, wrong_obj_msg
 
 #################################################################
@@ -367,7 +371,7 @@ def check_format_input_vector2(
                 f"Input {param_name} must have shape {shape}; "
                 f"instead received shape {inp.shape}."
             )
-            raise ValueError(msg)
+            raise MagpylibBadInputShape(msg)
     return inp
 
 
@@ -624,7 +628,7 @@ def check_getBH_output_type(output):
     acceptable = ("ndarray", "dataframe")
     if output not in acceptable:
         msg = f"Input output must be one of {acceptable}; instead received {output!r}."
-        raise ValueError(msg)
+        raise MagpylibBadUserInput(msg)
     if output == "dataframe" and find_spec("pandas") is None:  # pragma: no cover
         msg = (
             "Input output='dataframe' requires Pandas installation, "
@@ -642,5 +646,5 @@ def check_input_canvas_update(canvas_update, canvas):
             f"The canvas_update must be one of {acceptable}; "
             f"instead received {canvas_update!r}."
         )
-        raise ValueError(msg)
+        raise MagpylibBadUserInput(msg)
     return canvas is None if canvas_update in (None, "auto") else canvas_update
