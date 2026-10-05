@@ -1,0 +1,23 @@
+{
+  "definition_blob_sha1": {
+    ".github/workflows/alpha-bridge-ci-verify.yml": "d19efeb3bd029beb4c50fd874010d2b930d20715",
+    ".github/workflows/cd.yml": "bcaeb899ea5145e01fc1296e1bc30f94b98fc077",
+    ".github/workflows/ci.yml": "d0ddaab538acd905f2dcd222b9f19be81c9607ea"
+  },
+  "definition_sha256": {
+    ".github/workflows/alpha-bridge-ci-verify.yml": "8fde9e2f5e1b37bbbb22794427ac6d217d8b18bc857606edd0b072e89c58b436",
+    ".github/workflows/cd.yml": "e35309e134a2e87d404a644fa3fbfb0ecaf32b454ed95466a5befb638b035716",
+    ".github/workflows/ci.yml": "f03885bb10eb4e42ddc57ed4e6737aead8f001e78006bb089e9a98f3776abf95"
+  },
+  "generator_sha256": "f9d11fba5b604bac754f7ab7e40ccde549adf8e029da2ca91ed14e9ab94c0775",
+  "schema": "alpha-bridge/fork-ci",
+  "source_branch": "main",
+  "source_commit": "87046ffce965de5c3ac052b3f007c3ea1aa23428",
+  "source_repository": "magpylib/magpylib",
+  "version": 1,
+  "workflows": [
+    ".github/workflows/alpha-bridge-ci-verify.yml",
+    ".github/workflows/cd.yml",
+    ".github/workflows/ci.yml"
+  ]
+}

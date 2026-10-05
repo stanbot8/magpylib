@@ -1,80 +1,19 @@
-name: CD
-
+name: CI input verification
 on:
   workflow_dispatch:
-  pull_request:
-  push:
-    branches:
-    - main
-  release:
-    types:
-    - published
-
-permissions: {}
-
-concurrency:
-  group: ${{ github.workflow }}-${{ ((github.event_name == 'schedule' || 
-    github.event_name == 'workflow_run') && 'refs/heads/main' || github.ref) }}
-  cancel-in-progress: ${{ (github.event_name == 'workflow_dispatch' || 
-    github.run_attempt > 1) && (true) }}
-
-env:
-  # Many color libraries just need this to be set to any value, but at least
-  # one distinguishes color depth, where "3" -> "256-bit color".
-  FORCE_COLOR: 3
-
+    inputs:
+      probe:
+        type: string
+        required: true
 jobs:
-  dist:
-    name: Distribution build
+  check:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-
     steps:
-    - uses: actions/checkout@v7
-      with:
-        persist-credentials: false
-        fetch-depth: 0
-
-      # Pinned to a full version on purpose: v3 stopped force-tagging `@v3`
-      # and `@v3.0`, so there is no moving tag to follow. Dependabot bumps it.
-      # It has to be v3 at least -- v2 pins Twine 6.2, which rejects the
-      # Metadata-Version 2.5 that hatchling now writes, failing every build.
-        ref: ${{ (github.event_name == 'schedule' || github.event_name == 
-          'workflow_run') && '87046ffce965de5c3ac052b3f007c3ea1aa23428' || 
-          github.sha }}
-    - uses: hynek/build-and-inspect-python-package@v3.0.1
-
+    - run: echo 'Changed inputs reached the consumer'
     needs:
     - alpha_bridge_inputs
     if: ${{ (success()) && needs.alpha_bridge_inputs.outputs.changed == 'true' 
       }}
-  publish:
-    needs:
-    - dist
-    - alpha_bridge_inputs
-    name: Publish to PyPI
-    environment: pypi
-    permissions:
-      id-token: write
-      attestations: write
-      contents: read
-    runs-on: ubuntu-latest
-    if: ${{ (github.event_name == 'release' && github.event.action == 
-      'published') && needs.alpha_bridge_inputs.outputs.changed == 'true' }}
-
-    steps:
-    - uses: actions/download-artifact@v8
-      with:
-        name: Packages
-        path: dist
-
-    - name: Generate artifact attestation for sdist and wheel
-      uses: actions/attest@v4
-      with:
-        subject-path: dist/*
-
-    - uses: pypa/gh-action-pypi-publish@release/v1
   alpha_bridge_inputs:
     name: CI input check
     runs-on: ubuntu-latest
@@ -94,15 +33,12 @@ jobs:
         GH_TOKEN: ${{ github.token }}
         AB_REPOSITORY: ${{ github.repository }}
         AB_RUN_ID: ${{ github.run_id }}
-        AB_HEAD_SHA: ${{ (github.event_name == 'schedule' || github.event_name 
-          == 'workflow_run') && '87046ffce965de5c3ac052b3f007c3ea1aa23428' || 
-          github.sha }}
-        AB_REF: ${{ (github.event_name == 'schedule' || github.event_name == 
-          'workflow_run') && 'refs/heads/main' || github.ref }}
+        AB_HEAD_SHA: ${{ github.sha }}
+        AB_REF: ${{ github.ref }}
         AB_WORKFLOW_DIGEST: 
-          60945665f6eee4301b0499c1c572b3e77c62fb4b0fd8dd86579a2fdcb59f29fb
-        AB_EVENT: ${{ github.event_name }}
-        AB_SCHEDULE: ${{ github.event.schedule || '' }}
+          538b9a5f4a645070b988c8cc2bc361fe5412e9e5bb5ea5f9f39b3e269164c9cb
+        AB_EVENT: schedule
+        AB_SCHEDULE: alpha-bridge verification
         AB_VARIABLES: ${{ toJSON(vars) }}
         AB_INPUTS: ${{ toJSON(inputs) }}
         AB_WORKFLOW_RUN: ${{ toJSON(github.event.workflow_run) }}
