@@ -1,18 +1,18 @@
 {
   "default_workflow_permissions": "write",
   "definition_blob_sha1": {
-    ".github/workflows/alpha-bridge-ci-probe.yml": "54863818654b6c3b324f47f927554ca656b0ba72",
+    ".github/workflows/alpha-bridge-ci-probe.yml": "b0764701b0cc2f35ed278f56e84c2d585510e440",
     ".github/workflows/alpha-bridge-ci-verify.yml": "794644f80c182089fead165d510134722bb46e53",
-    ".github/workflows/cd.yml": "5e568acbe62174526aa25ac8255f854bbfa25f40",
-    ".github/workflows/ci.yml": "c599d19b7d037561a4290f216452d775ff41fd54"
+    ".github/workflows/cd.yml": "b3502f261e167f6cb106986e6e6bea25fbff75e6",
+    ".github/workflows/ci.yml": "a87b3052fa535cf89bcc759f6a6aa720c9bf98e4"
   },
   "definition_sha256": {
-    ".github/workflows/alpha-bridge-ci-probe.yml": "0637dc006384f188f10c612b30c708f59c9d535a41c4852e3d40cf692635e8a9",
+    ".github/workflows/alpha-bridge-ci-probe.yml": "92f9e0d73e9c4753a2028a1dfd224fe1c197bf385ec3598843d4cca399735156",
     ".github/workflows/alpha-bridge-ci-verify.yml": "939acb3c4113b94245fd27cf0936c6d8f14bffac8adac8aeb49c30bbced6a5c7",
-    ".github/workflows/cd.yml": "c007a82feea1d1e07cf7f8b52abe98658495655f00360b71fd43d1f58472aa37",
-    ".github/workflows/ci.yml": "0f2c8e31b572bf6e8a3a4085139078745f80b1194b50c13c71d79f9eb997ec87"
+    ".github/workflows/cd.yml": "8ed3bf86248515a91f0f02a01c232a2d996f558adaddab1c7f491bf4c98f9679",
+    ".github/workflows/ci.yml": "5fedef0fa7ebd917b34bedf5ea9350fe046e3e1f74e3ba9720508e8f1e59e4a6"
   },
-  "generator_sha256": "5a9faa0e5f7f50db58c87e3b337aa37b202117d9b2f8a1cf999b892b9c2dce77",
+  "generator_sha256": "4bbd1a1f9315d134cec261dd0580b504db191355193dfc428c3ca0ac65bb6b74",
   "schema": "alpha-bridge/fork-ci",
   "source_branch": "main",
   "source_commit": "87046ffce965de5c3ac052b3f007c3ea1aa23428",
